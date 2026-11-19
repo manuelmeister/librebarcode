@@ -212,7 +212,6 @@ define([
     };
 
     _p.compositeCharcodeToGlyphName = Code39Builder.prototype.compositeCharcodeToGlyphName;
-    _p.addCompositeGlyphs = Code39Builder.prototype.addCompositeGlyphs;
     _p.getFeatures = Code39Builder.prototype.getFeatures;
 
     return {

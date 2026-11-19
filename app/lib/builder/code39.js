@@ -193,9 +193,7 @@ define([
     return Code39Glyph;
     })(abstract.BarcodeGlyph);
 
-    var Parent = abstract.BarcodeBuilder
-      , tightStopName = 'code.stop.tight'
-      ;
+    var Parent = abstract.BarcodeBuilder;
 
     function Code39Builder(userParameters, fontInfo, fontBelow) {
         Parent.call(this, fontInfo, fontBelow);
@@ -258,33 +256,7 @@ define([
         return charcode2name(charcode);
     };
 
-    _p.addCompositeGlyphs = function(glyphSet, fontBelow) {
-        Parent.prototype.addCompositeGlyphs.call(this, glyphSet, fontBelow);
-        if (fontBelow || !this.parameters.tightStop)
-            return;
-
-        let delimiter = this.getGlyphByChar('*').components[0];
-        this._writeGlyph(glyphSet, tightStopName, {
-            width: delimiter.width - this.parameters.narrowWhite,
-            unicodes: []
-        }, pen => this._penAddComponent(pen, delimiter.name));
-    };
-
     _p.getFeatures = function() {
-        let tightStopRules = '';
-        if (!this.fontBelow && this.parameters.tightStop) {
-            let delimiter = this.compositeCharcodeToGlyphName('*');
-            let symbols = [];
-            for (let glyph of this.glyphs) {
-                for (let charCode of glyph.targetCharCodes)
-                    symbols.push(this.compositeCharcodeToGlyphName(charCode));
-            }
-            // Keep the inter-character gap after the start symbol.
-            tightStopRules = `
-    @barcodeSymbols = [${symbols.join(' ')}];
-    ignore sub @barcodeSymbols ${delimiter}' @barcodeSymbols;
-    sub @barcodeSymbols ${delimiter}' by ${tightStopName};`;
-        }
         var feature = `
 # This fixes #25 when calt is available but it breaks the font in
 # MS-Word, if "Contextual Alternates" is not set.
@@ -294,7 +266,7 @@ define([
 # Also, using "Â" instead of " " is a direct workaround when
 # OpenType is not available.
 feature calt {
-    sub ${ this.compositeCharcodeToGlyphName(' ') } by ${ this.compositeCharcodeToGlyphName('Â') };${tightStopRules}
+    sub ${ this.compositeCharcodeToGlyphName(' ') } by ${ this.compositeCharcodeToGlyphName('Â') };
 } calt;
 `;
         return feature;

@@ -6,12 +6,12 @@ Fonts to write barcodes.
 
 ## Code 39
 
-* Tight Code 39 ([TTF](fonts/TightCode39-Regular.ttf), [WOFF2](fonts/TightCode39-Regular.woff2))
+* Libre Barcode 39
 * Libre Barcode 39 Text
-* Tight Code 39 Extended ([TTF](fonts/TightCode39Extended-Regular.ttf), [WOFF2](fonts/TightCode39Extended-Regular.woff2))
-* Libre Barcode 39 Extended Text
+* Libre Barcode Extended 39
+* Libre Barcode Extended 39 Text
 
-[Code 39 manual](documentation/code39.md)
+[Code 39 manual](https://graphicore.github.io/librebarcode/documentation/code39)
 
 ## Code 128
 
@@ -39,7 +39,7 @@ You'll need these installed and configured first:
 
 ```shell
 # fetch the sources
-path/to $ git clone https://github.com/manuelmeister/librebarcode.git
+path/to $ git clone git@github.com:graphicore/librebarcode.git
 path/to $ cd librebarcode
 
 # install and switch to the pinned Node.js version if necessary, e.g.
@@ -60,13 +60,8 @@ path/to/librebarcode $ uv run ./app/bin/buildAll
 # the UFO sources should be in the sources/ directory
 ```
 
-To produce the webfonts from the built TrueType files, run `woff2_compress`
-from the [WOFF2 tools](https://github.com/google/woff2) on each `fonts/TightCode*-Regular.ttf` file.
-
 ## Licensing
 
-The fonts are licensed under the [SIL Open Font License 1.1](OFL.txt).
-Tight Code 39 and Tight Code 39 Extended are derived from the corresponding
-Libre Barcode fonts by the [Libre Barcode Project Authors](AUTHORS.txt).
+The fonts are licensed under OFL.
 
 The barcode font generators and encoders are GPL3+.
