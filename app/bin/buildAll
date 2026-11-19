@@ -84,14 +84,6 @@ function configure {
         # TARGET_DATA=(UFO_BASE CODE_TYPE USEFONT SUB_FAMILY_NAME)
         if [ "$TARGET" = "CODE39" ]; then
             TARGET_DATA=("39" "Code39" 0 "39");
-            # This is not used in this build currently, just a demo of parameters
-            # Note the heredoc <<-  need real tabs for indentation (not soft tabs/spaces)
-            PARAMETERS=$(cat <<-EOT
-			{
-			    "example": 123
-			}
-			EOT
-            )
         elif [ "$TARGET" = "CODE39TEXT" ]; then
             TARGET_DATA=("39Text" "Code39" 1 "39 Text")
         elif [ "$TARGET" = "CODE39EXTENDED" ]; then
@@ -102,6 +94,17 @@ function configure {
             TARGET_DATA=("128" "Code128" 0 "128")
         elif [ "$TARGET" = "CODE128TEXT" ]; then
             TARGET_DATA=("128Text" "Code128" 1 "128 Text")
+        fi
+
+        if [ "$TARGET" = "CODE39" ] || [ "$TARGET" = "CODE39EXTENDED" ]; then
+            FAMILY_BASE_NAME="Tight Code"
+            FILE_BASENAME="TightCode"
+            ASCENDER=$UNITS_PER_EM
+            DESCENDER=0
+            X_HEIGHT=$ASCENDER
+            CAP_HEIGHT=$ASCENDER
+            VERSION_MINOR=6
+            PARAMETERS="{\"top\": $ASCENDER, \"tightStop\": true}"
         fi
 
     elif [ "$TARGET" = "EAN13TEXT" ]; then
